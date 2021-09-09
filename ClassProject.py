@@ -12,8 +12,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
 
-
-
 class ExploreData:
     _dataframe = None
     _dataframe_path = None
@@ -26,7 +24,7 @@ class ExploreData:
             self._dataframe = pd.read_csv(self.dataframe_path)
 
     def info_data(self):
-        print(' ** format du dataframe (ligne,colonne) = {} ** \n'.format(self.dataframe.shape))
+        print(' ** format du dataframe (ligne,colonne) = {} ** \n'.format(self._dataframe.shape))
         print('** description du data frame **')
         print(self._dataframe.describe())
 
@@ -72,9 +70,7 @@ class ExploreData:
             self._dataframe[c] = LabelEncoder().fit_transform(self._dataframe[c].astype(str))
 
 
-
 class Model:
-
     _X_train = None
     _X_test = None
     _y_train = None
@@ -115,14 +111,12 @@ class Model:
     def evaluation(self, metric=None):
         if self._regress_or_classfication == 0:
             for model in self._regression_models:
+                print(model)
                 self._regression_models[model]['score'] = cross_val_score(self._regression_models[model]['model'],
                                                                           self._X_train, self._y_train, cv=3,
                                                                           scoring=metric)
-                print(models[model]['name'] + ": %0.4f (+/- %0.4f)" % (self._regression_models[model]['score'].mean(),
-                                                                       self._regression_models[model]['score'].std() * 2))
+                print(self._regression_models[model]['name'] + ": %0.4f (+/- %0.4f)" % (
+                self._regression_models[model]['score'].mean(),
+                self._regression_models[model]['score'].std() * 2))
         else:
             pass
-
-
-
-
