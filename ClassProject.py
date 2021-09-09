@@ -8,6 +8,10 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+
 
 
 class ExploreData:
@@ -63,6 +67,11 @@ class ExploreData:
         print('** Suppression des colonne : ', columns, ' **')
         self._dataframe.drop(columns, axis=1, inplace=True)
 
+    def process_cat(self):
+        for c in self._dataframe.select_dtypes(object).columns:
+            self._dataframe[c] = LabelEncoder().fit_transform(self._dataframe[c].astype(str))
+
+
 
 class Model:
 
@@ -107,7 +116,7 @@ class Model:
         if self._regress_or_classfication == 0:
             for model in self._regression_models:
                 self._regression_models[model]['score'] = cross_val_score(self._regression_models[model]['model'],
-                                                                          self._X_train,self._y_train, cv=3,
+                                                                          self._X_train, self._y_train, cv=3,
                                                                           scoring=metric)
                 print(models[model]['name'] + ": %0.4f (+/- %0.4f)" % (self._regression_models[model]['score'].mean(),
                                                                        self._regression_models[model]['score'].std() * 2))
