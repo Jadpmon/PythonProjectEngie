@@ -21,7 +21,7 @@ class ExploreData:
             self._dataframe = dataframe
         if dataframe_path is not None:
             self._dataframe_path = dataframe_path
-            self._dataframe = pd.read_csv(self.dataframe_path)
+            self._dataframe = pd.read_csv(self._dataframe_path)
 
     def info_data(self):
         print(' ** format du dataframe (ligne,colonne) = {} ** \n'.format(self._dataframe.shape))
