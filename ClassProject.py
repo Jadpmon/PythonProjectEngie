@@ -20,7 +20,7 @@ class ExploreData:
         if dataframe is not None:
             self._dataframe = dataframe
         if dataframe_path is not None:
-            self._dataframe_path: dataframe_path
+            self._dataframe_path = dataframe_path
             self._dataframe = pd.read_csv(self.dataframe_path)
 
     def info_data(self):
