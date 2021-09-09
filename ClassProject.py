@@ -111,7 +111,6 @@ class Model:
     def evaluation(self, metric=None):
         if self._regress_or_classfication == 0:
             for model in self._regression_models:
-                print(model)
                 self._regression_models[model]['score'] = cross_val_score(self._regression_models[model]['model'],
                                                                           self._X_train, self._y_train, cv=3,
                                                                           scoring=metric)
